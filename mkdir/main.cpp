@@ -38,25 +38,29 @@ void insert(const string& key, treeNode* root)
 {
     vector<string> tmp;
     split(key, tmp);
-    treeNode* child = root;
+//    treeNode* child = root;
+    int flag = 1;   //标志位，是否找到重复的父目录
     for (int i = 0; i < tmp.size(); i++)
     {
-        child = root;
+//        child = root;
         for (int j = 0; j < root->childs.size(); j++)
         {
             if (root->childs[j]->key == tmp[i])
             {
                 root = root->childs[j];
+                flag = 0;  // 重复的父目录
                 break;
             }
         }
-        if (child == root)
+//        if (child == root)
+        if (flag)   //没有找到重复的父目录，直接将目录插入
         {
             root->childs.push_back(new treeNode(tmp[i]));
             root = root->childs.back();
         }
         else
-            child = root;
+//            child = root;
+            flag = 1;  // 重复的父目录不需要插入，跳过
     }
 }
 
